@@ -29,7 +29,7 @@ unless File.exists?("/usr/local/bin/protoc")
   execute "unbzip-protobuf" do
     command "tar -jxf #{Chef::Config[:file_cache_path]}/protobuf-#{node["protobuf"]["version"]}.tar.bz2"
     creates "#{Chef::Config[:file_cache_path]}/protobuf-#{node["protobuf"]["version"]}/README.txt"
-    cwd "/tmp"
+    cwd Chef::Config[:file_cache_path]
     action :run
   end
 
