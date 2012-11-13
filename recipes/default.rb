@@ -20,22 +20,22 @@
 include_recipe 'build-essential'
 
 unless File.exists?("/usr/local/bin/protoc")
-  remote_file "/tmp/protobuf-#{node[:protobuf][:version]}.tar.bz2" do
-    source "http://protobuf.googlecode.com/files/protobuf-#{node[:protobuf][:version]}.tar.bz2"
+  remote_file "#{Chef::Config[:file_cache_path]}/protobuf-#{node["protobuf"]["version"]}.tar.bz2" do
+    source "http://protobuf.googlecode.com/files/protobuf-#{node["protobuf"]["version"]}.tar.bz2"
     mode "0644"
     checksum "db0fbdc58be22a676335a37787178a4dfddf93c6"
   end
 
   execute "unbzip-protobuf" do
-    command "tar -jxf /tmp/protobuf-#{node[:protobuf][:version]}.tar.bz2"
-    creates "/tmp/protobuf-#{node[:protobuf][:version]}/README.txt"
+    command "tar -jxf #{Chef::Config[:file_cache_path]}/protobuf-#{node["protobuf"]["version"]}.tar.bz2"
+    creates "#{Chef::Config[:file_cache_path]}/protobuf-#{node["protobuf"]["version"]}/README.txt"
     cwd "/tmp"
     action :run
   end
 
   execute "make-install-protobuf" do
     command "./configure && make && make check && make install"
-    cwd "/tmp/protobuf-#{node[:protobuf][:version]}"
+    cwd "#{Chef::Config[:file_cache_path]}/protobuf-#{node["protobuf"]["version"]}"
     action :run
   end
 end
