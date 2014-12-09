@@ -23,7 +23,6 @@ unless File.exists?("/usr/local/bin/protoc")
   remote_file "#{Chef::Config[:file_cache_path]}/protobuf-#{node["protobuf"]["version"]}.tar.bz2" do
     source "http://protobuf.googlecode.com/files/protobuf-#{node["protobuf"]["version"]}.tar.bz2"
     mode "0644"
-    checksum "db0fbdc58be22a676335a37787178a4dfddf93c6"
   end
 
   execute "unbzip-protobuf" do
